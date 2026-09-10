@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fiha — the aesthetic store</title>
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://jsdelivr.net"></script>
+    <style>
+        :root {
+            --bg-cream: #fbf9f6;
+            --cozy-pink: #ffb7c5;
+            --accent-rose: #d48c98;
+            --text-dark: #2c2523;
+            --text-muted: #6e6461;
+            --glass-border: rgba(243, 213, 218, 0.4);
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-serif: 'Instrument Serif', serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-sans); color: var(--text-dark); }
+        body { background-color: var(--bg-cream); overflow-x: hidden; }
+        .promo-bar { background-color: #fff0f2; text-align: center; padding: 8px; font-size: 12px; letter-spacing: 1px; font-weight: 600; border-bottom: 1px solid var(--glass-border); }
+        
+        header {
+            background: rgba(251, 249, 246, 0.85); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100;
+            display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; border-bottom: 1px solid var(--glass-border);
+        }
+        .logo { font-family: var(--font-serif); font-size: 36px; font-style: italic; text-decoration: none; letter-spacing: -0.5px; user-select: none; -webkit-user-select: none; }
+        nav a { text-decoration: none; margin-left: 24px; font-size: 14px; font-weight: 600; cursor: pointer; transition: color 0.3s; }
+        nav a:hover { color: var(--accent-rose); }
+
+        .hero { padding: 80px 5% 40px; display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+        .hero-text { max-width: 500px; }
+        .hero-text h1 { font-family: var(--font-serif); font-size: 64px; font-weight: 400; line-height: 1.1; margin-bottom: 20px; }
+        .hero-text p { color: var(--text-muted); font-size: 16px; line-height: 1.6; margin-bottom: 30px; }
+
+        .cta-btn {
+            background: var(--text-dark); color: #fff; padding: 14px 28px; border-radius: 50px; text-decoration: none;
+            font-weight: 600; display: inline-block; transition: transform 0.2s, background 0.3s; cursor: pointer; border: none;
+        }
+        .cta-btn:hover { transform: translateY(-2px); background: var(--accent-rose); }
+        .section-title { font-family: var(--font-serif); font-size: 42px; text-align: center; margin: 60px 0 30px; font-weight: 400; }
+        
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; padding: 0 5% 60px; }
+        .product-card { background: #fff; border-radius: 16px; overflow: hidden; border: 1px solid rgba(0,0,0,0.03); box-shadow: 0 4px 20px rgba(0,0,0,0.02); transition: transform 0.3s ease; }
+        .product-card:hover { transform: translateY(-6px); }
+        .product-img { width: 100%; height: 320px; object-fit: cover; background: #f3f3f3; }
+        .product-info { padding: 20px; }
+        .product-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-rose); font-weight: 700; margin-bottom: 8px; }
+        .product-name { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+        .product-price { font-weight: 700; color: var(--text-dark); }
+        .add-to-cart-btn { width: 100%; background: #fff; border: 1px solid var(--text-dark); padding: 10px; border-radius: 8px; margin-top: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .add-to-cart-btn:hover { background: var(--text-dark); color: #fff; }
+
+        .view-panel { display: none; padding: 40px 5%; max-width: 1200px; margin: 0 auto; }
+        .view-panel.active { display: block; }
+        .input-box { width: 100%; padding: 12px; border: 1px solid var(--glass-border); border-radius: 8px; margin-top: 6px; margin-bottom: 16px; background: #fff; }
+
+        .admin-dashboard { display: grid; grid-template-columns: 240px 1fr; gap: 30px; background: #fff; border-radius: 20px; min-height: 600px; border: 1px solid var(--glass-border); overflow: hidden; }
+        .admin-sidebar { background: #fbfafa; border-right: 1px solid var(--glass-border); padding: 30px 20px; }
+        .admin-menu-item { padding: 12px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; margin-bottom: 8px; }
+        .admin-menu-item.active { background: var(--cozy-pink); color: #fff; }
+        .admin-main { padding: 40px; }
+        
+        .login-card { max-width: 400px; margin: 80px auto; background: #fff; padding: 40px; border-radius: 16px; border: 1px solid var(--glass-border); box-shadow: 0 10px 30px rgba(0,0,0,0.03); text-align: center; }
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background-color: #fff0f2; border: 1px solid var(--accent-rose); padding: 12px 20px; border-radius: 30px; box-shadow: 0 8px 24px rgba(212, 140, 152, 0.2); display: flex; align-items: center; gap: 10px; text-decoration: none; z-index: 999; transition: all 0.3s ease; }
+        .whatsapp-float:hover { transform: translateY(-4px); background-color: var(--cozy-pink); }
+        .whatsapp-float span { font-size: 14px; font-weight: 600; color: var(--text-dark); }
+        .whatsapp-float:hover span { color: #fff; }
+    </style>
+</head>
+<body>
+
+    <div class="promo-bar">🎀 FREE SHIPPING ON PREMIUM BUNDLES OVER ₹999 | UPI SECURE STOREFRONT</div>
+
+    <header>
+        <!-- Tapping this logo 5 times sequentially launches the portal handshake -->
+        <a href="#" class="logo" onclick="handleLogoClick(event)">fiha</a>
+        <nav>
+            <a onclick="switchView('storefront-view')">Shop All</a>
+            <a onclick="switchView('checkout-view')">Cart (<span id="cart-count">0</span>)</a>
+            <!-- ADMIN MENU HAS BEEN REMOVED FOR COMPLETE SECURITY -->
+        </nav>
+    </header>
+
+    <!-- VIEW 1: STOREFRONT -->
+    <main id="storefront-view" class="view-panel active">
+        <section class="hero">
+            <div class="hero-text">
+                <h1>Pinterest-inspired finds, made for every occasion.</h1>
+                <p>Handcrafted hampers, personalized stationery, and cozy artwork packed by hand in Lucknow.</p>
+                <a href="#catalog" class="cta-btn">Explore Collection ✨</a>
+            </div>
+            <div style="flex: 1; text-align: right;">
+                <div style="background: linear-gradient(135deg, #ffb7c5, #fbf9f6); width: 100%; max-width: 450px; height: 400px; display: inline-block; border-radius: 24px;"></div>
+            </div>
+        </section>
+        <h2 id="catalog" class="section-title">Handpicked Top Selections</h2>
+        <div class="grid-container" id="product-catalog-grid"></div>
+    </main>
+
+    <!-- VIEW 2: CART PLACEHOLDER -->
+    <section id="checkout-view" class="view-panel">
+        <h2 class="section-title">Checkout Pipeline Empty</h2>
+    </section>
+
+    <!-- VIEW 3: INVISIBLE ENTRY GATEWAY -->
+    <section id="login-gateway-view" class="view-panel">
+        <div class="login-card" id="vault-key-step">
+            <h3 style="font-family: var(--font-serif); font-size: 28px; margin-bottom: 10px;">Authorized Access Only</h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Please enter the master encryption key.</p>
+            <form id="admin-vault-login-form">
+                <input type="password" id="vaultKeyInput" class="input-box" placeholder="••••••••" style="text-align: center; font-size: 18px;" required>
+                <button type="submit" class="cta-btn" style="width: 100%;">Verify Key Sequence</button>
+            </form>
+            <p id="login-error-msg" style="color: red; font-size: 13px; margin-top: 12px; display: none;">⚠️ Access Denied: Invalid Key Sequence</p>
+        </div>
+
+        <div class="login-card" id="vault-otp-step" style="display: none;">
+            <h3 style="font-family: var(--font-serif); font-size: 28px; margin-bottom: 10px;">Two-Factor Validation</h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">A verification code has been dispatched to your email configuration panel.</p>
+            <form id="admin-otp-validation-form">
+                <input type="text" id="vaultOtpInput" class="input-box" placeholder="000000" maxlength="6" style="text-align: center; font-size: 22px; letter-spacing: 6px; font-weight:700;" required>
+                <button type="submit" class="cta-btn" style="width: 100%;">Confirm OTP Token</button>
+            </form>
+            <p id="otp-error-msg" style="color: red; font-size: 13px; margin-top: 12px; display: none;">⚠️ Invalid Security Pin Sequence</p>
+        </div>
+    </section>
+
+    <!-- VIEW 4: SECURED INTERFACE CORE CONSOLE -->
+    <section id="admin-view" class="view-panel">
+        <div class="admin-dashboard">
+            <aside class="admin-sidebar">
+                <h3 style="font-family: var(--font-serif); font-size:24px; margin-bottom:30px;">fiha hub</h3>
+                <div class="admin-menu-item active">📦 Customer Orders</div>
+            </aside>
+            <main class="admin-main">
+                <h3>Live Workspace Shield Active</h3>
+                <p style="margin-top:10px; color:var(--text-muted);">Welcome back. Your hidden vault management module is fully online.</p>
+            </main>
+        </div>
+    </section>
+
+    <a href="https://wa.me" target="_blank" class="whatsapp-float"><span>Chat with us ✨</span></a>
+
+    <script>
+      
